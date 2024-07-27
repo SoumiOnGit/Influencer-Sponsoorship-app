@@ -41,27 +41,29 @@
                 additionalFields.innerHTML = `
                     <div class="form-group">
                         <label for="followers">Followers:</label>
-                        <input type="number" id="followers" name="followers">
+                        <input type="number" id="followers" name="followers" required>
                     </div>
                     <div class="form-group">
                         <label for="niche">Niche:</label>
-                        <input type="text" id="niche" name="niche">
+                        <input type="text" id="niche" name="niche" required>
                     </div>
                     <div class="form-group">
                         <label for="reach">Reach:</label>
-                        <input type="number" id="reach" name="reach">
+                        <input type="number" id="reach" name="reach" required>
                     </div>
                 `;
             } else if (userType === 'sponsor') {
                 additionalFields.innerHTML = `
                     <div class="form-group">
                         <label for="companyname">Company Name:</label>
-                        <input type="text" id="companyname" name="companyname">
+                        <input type="text" id="companyname" name="companyname" required>
                     </div>
                 `;
-            } else if (userType === 'admin') {
-                // Admin-specific fields can be added here if needed
             }
         });
+
+        // Trigger change event on page load to display the correct fields for the default selection
+        document.getElementById('user_type').dispatchEvent(new Event('change'));
     </script>
+</div>
 {% endblock %}
