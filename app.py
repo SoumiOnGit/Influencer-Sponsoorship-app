@@ -45,6 +45,7 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        user_type = request.form.get('user_type')
         username = request.form.get('username')
         name = request.form.get('name')
         password = request.form.get('password')
@@ -53,35 +54,81 @@ def register():
         niche = request.form.get('niche')
         reach = request.form.get('reach', type=int)
 
-        print(f"Received data: username={username}, name={name}, password={password}, email={email}, followers={followers}, niche={niche}, reach={reach}")
+        print(f"Received data: user_type={user_type}, username={username}, name={name}, password={password}, email={email}, followers={followers}, niche={niche}, reach={reach}")
 
-        if not (username and name and password and email and followers is not None and niche and reach is not None):
-            flash("All fields are required.")
-            return redirect(url_for('register'))
+        if user_type == 'influencer':
+            if not (username and name and password and email and followers is not None and niche and reach is not None):
+                flash("All fields are required for Influencers.")
+                return redirect(url_for('register'))
 
-        # Create new Influencer
-        new_influencer = Influencer(
-            username=username,
-            name=name,
-            password=password,
-            email=email,
-            followers=followers,
-            niche=niche,
-            reach=reach
-        )
+            new_influencer = Influencer(
+                username=username,
+                name=name,
+                password=password,
+                email=email,
+                followers=followers,
+                niche=niche,
+                reach=reach
+            )
 
-        try:
-            db.session.add(new_influencer)
-            db.session.commit()
-            flash("Registration successful.")
-            print(f"Saved new influencer: {new_influencer}")
-        except Exception as e:
-            db.session.rollback()
-            flash(f"An error occurred: {e}")
-            print(f"Error: {e}")
+            try:
+                db.session.add(new_influencer)
+                db.session.commit()
+                flash("Influencer registration successful.")
+                print(f"Saved new influencer: {new_influencer}")
+            except Exception as e:
+                db.session.rollback()
+                flash(f"An error occurred: {e}")
+                print(f"Error: {e}")
+
+        elif user_type == 'sponsor':
+            companyname = request.form.get('companyname')
+            if not (username and name and password and email and companyname):
+                flash("All fields are required for Sponsors.")
+                return redirect(url_for('register'))
+
+            new_sponsor = Sponsor(
+                username=username,
+                name=name,
+                password=password,
+                email=email,
+                companyname=companyname
+            )
+
+            try:
+                db.session.add(new_sponsor)
+                db.session.commit()
+                flash("Sponsor registration successful.")
+                print(f"Saved new sponsor: {new_sponsor}")
+            except Exception as e:
+                db.session.rollback()
+                flash(f"An error occurred: {e}")
+                print(f"Error: {e}")
+
+        elif user_type == 'admin':
+            if not (username and name and password and email):
+                flash("All fields are required for Admins.")
+                return redirect(url_for('register'))
+
+            new_admin = Admin(
+                username=username,
+                name=name,
+                password=password,
+                email=email
+            )
+
+            try:
+                db.session.add(new_admin)
+                db.session.commit()
+                flash("Admin registration successful.")
+                print(f"Saved new admin: {new_admin}")
+            except Exception as e:
+                db.session.rollback()
+                flash(f"An error occurred: {e}")
+                print(f"Error: {e}")
 
         return redirect(url_for('index'))
-    
+
     return render_template('register.html')
 
 
