@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Account Type</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron mt-5">
+            <h1 class="display-4">Select Your Account Type</h1>
+            <p class="lead">Please choose whether you are an Influencer or a Sponsor to proceed with registration.</p>
+            <form method="POST" action="{{ url_for('account_type') }}">
+                <div class="form-group">
+                    <label for="account_type">Account Type</label>
+                    <select class="form-control" id="account_type" name="account_type" required>
+                        <option value="" disabled selected>Select your account type</option>
+                        <option value="influencer">Influencer</option>
+                        <option value="sponsor">Sponsor</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Continue</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
