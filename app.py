@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from models import db, Influencer, Sponsor, Admin, Campaign
+from database import db
+from models import Influencer, Sponsor, Admin, Campaign, AdRequest
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'a5f3c3d7e9c3b60b75c16d2ef2a9c8f3'
+
 db.init_app(app)
 
 def create_default_admin():
@@ -58,7 +61,6 @@ def influencer_register():
         try:
             db.session.add(new_influencer)
             db.session.commit()
-            flash('Registration successful!', 'success')
             return redirect(url_for('index'))
         except Exception as e:
             db.session.rollback()
@@ -89,7 +91,6 @@ def sponsor_register():
         try:
             db.session.add(new_sponsor)
             db.session.commit()
-            flash('Registration successful!', 'success')
             return redirect(url_for('index'))
         except Exception as e:
             db.session.rollback()
@@ -107,21 +108,17 @@ def login():
         admin = Admin.query.filter_by(username=username, email=email, password=password).first()
         if admin:
             session['user'] = 'admin'
-            flash('Admin login successful!', 'success')
             return redirect(url_for('admin_dashboard'))
         
         influencer = Influencer.query.filter_by(username=username, email=email, password=password).first()
         if influencer:
             session['user'] = 'influencer'
-            session['username'] = username
-            flash('Login successful!', 'success')
             return redirect(url_for('influencer_dashboard', username=username))
         
         sponsor = Sponsor.query.filter_by(username=username, email=email, password=password).first()
         if sponsor:
             session['user'] = 'sponsor'
-            flash('Login successful!', 'success')
-            return redirect(url_for('sponsor_dashboard'))
+            return redirect(url_for('sponsor_dashboard', username=username))
         
         flash('Login failed. Check your credentials and try again.', 'danger')
     
@@ -130,12 +127,13 @@ def login():
 @app.route('/influencer/<username>/dashboard')
 def influencer_dashboard(username):
     influencer = Influencer.query.filter_by(username=username).first_or_404()
-    campaigns = Campaign.query.filter_by(influencer_id=influencer.id).all()
+    campaigns = []  # This should be replaced with actual campaign data
     return render_template('influencer_dashboard.html', influencer=influencer, campaigns=campaigns)
 
-@app.route('/sponsor/dashboard')
-def sponsor_dashboard():
-    return 'Sponsor Dashboard'
+@app.route('/sponsor/<username>/dashboard')
+def sponsor_dashboard(username):
+    sponsor = Sponsor.query.filter_by(username=username).first_or_404()
+    return render_template('sponsor_dashboard.html', sponsor=sponsor)
 
 @app.route('/admin/dashboard')
 def admin_dashboard():
@@ -143,6 +141,6 @@ def admin_dashboard():
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
-        create_default_admin()
+        db.create_all()  
+        create_default_admin()  
     app.run(debug=True)
