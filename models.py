@@ -34,3 +34,12 @@ class Admin(db.Model):
         self.name = name
         self.password = password
         self.email = email
+
+
+
+class Campaign(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.String(500), nullable=False)
+    influencer_id = db.Column(db.Integer, db.ForeignKey('influencer.id'), nullable=True)
+    influencer = db.relationship('Influencer', backref='campaigns')

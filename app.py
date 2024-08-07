@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from models import db, Influencer, Sponsor, Admin
+from models import db, Influencer, Sponsor, Admin, Campaign
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -8,11 +8,10 @@ app.secret_key = 'a5f3c3d7e9c3b60b75c16d2ef2a9c8f3'
 db.init_app(app)
 
 def create_default_admin():
-    with app.app_context():
-        if not Admin.query.first():
-            default_admin = Admin(username='admin', name='admin', password='admin', email='admin@mail.com')
-            db.session.add(default_admin)
-            db.session.commit()
+    if not Admin.query.first():
+        default_admin = Admin(username='admin', name='admin', password='admin', email='admin@mail.com')
+        db.session.add(default_admin)
+        db.session.commit()
 
 @app.route('/')
 def index():
@@ -46,7 +45,6 @@ def influencer_register():
         niche = request.form['niche']
         reach = request.form['reach']
 
-        # Create a new influencer record
         new_influencer = Influencer(
             username=username,
             name=name,
@@ -78,7 +76,6 @@ def sponsor_register():
         industry = request.form['industry']
         budget = request.form['budget']
 
-        # Create a new sponsor record
         new_sponsor = Sponsor(
             username=username,
             name=name,
@@ -107,44 +104,45 @@ def login():
         email = request.form['email']
         password = request.form['password']
         
-        # Check admin login
         admin = Admin.query.filter_by(username=username, email=email, password=password).first()
         if admin:
-            # Set session or handle admin login
             session['user'] = 'admin'
             flash('Admin login successful!', 'success')
             return redirect(url_for('admin_dashboard'))
         
-        # Check influencer login
         influencer = Influencer.query.filter_by(username=username, email=email, password=password).first()
         if influencer:
-            # Set session or handle influencer login
             session['user'] = 'influencer'
+            session['username'] = username
             flash('Login successful!', 'success')
-            return redirect(url_for('influencer_dashboard')) # or relevant page
+            return redirect(url_for('influencer_dashboard', username=username))
         
-        # Check sponsor login
         sponsor = Sponsor.query.filter_by(username=username, email=email, password=password).first()
         if sponsor:
-            # Set session or handle sponsor login
             session['user'] = 'sponsor'
             flash('Login successful!', 'success')
-            return redirect(url_for('sponsor_dashboard')) # or relevant page
+            return redirect(url_for('sponsor_dashboard'))
         
         flash('Login failed. Check your credentials and try again.', 'danger')
     
     return render_template('login.html')
 
-@app.route('/influencer/dashboard')
-def influencer_dashboard():
-    return 'Influencer Dashboard'
+@app.route('/influencer/<username>/dashboard')
+def influencer_dashboard(username):
+    influencer = Influencer.query.filter_by(username=username).first_or_404()
+    campaigns = Campaign.query.filter_by(influencer_id=influencer.id).all()
+    return render_template('influencer_dashboard.html', influencer=influencer, campaigns=campaigns)
 
 @app.route('/sponsor/dashboard')
 def sponsor_dashboard():
     return 'Sponsor Dashboard'
 
+@app.route('/admin/dashboard')
+def admin_dashboard():
+    return 'Admin Dashboard'
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-        create_default_admin()  
+        create_default_admin()
     app.run(debug=True)
