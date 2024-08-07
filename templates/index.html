@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <title>Home</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <div class="container">
         <div class="jumbotron mt-5">
-            <h1 class="display-4">Welcome to the Influencer Sponsorship Platform!</h1>
-            <p class="lead">A place where influencers and sponsors connect to create amazing campaigns.</p>
-            <hr class="my-4">
-            <p>Explore opportunities, grow your reach, and collaborate on exciting projects.</p>
-            <a class="btn btn-primary btn-lg mr-2" href="{{ url_for('account_type') }}" role="button">Get Started</a>
+            <h1 class="display-4">Welcome to the Platform!</h1>
+            <p class="lead">Select your account type to get started.</p>
+            <a class="btn btn-primary btn-lg" href="{{ url_for('account_type') }}" role="button">Get Started</a>
+            <a class="btn btn-secondary btn-lg" href="{{ url_for('login') }}" role="button">Login</a>
         </div>
     </div>
 </body>

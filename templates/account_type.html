@@ -10,18 +10,9 @@
     <div class="container">
         <div class="jumbotron mt-5">
             <h1 class="display-4">Select Your Account Type</h1>
-            <p class="lead">Please choose whether you are an Influencer or a Sponsor to proceed with registration.</p>
-            <form method="POST" action="{{ url_for('account_type') }}">
-                <div class="form-group">
-                    <label for="account_type">Account Type</label>
-                    <select class="form-control" id="account_type" name="account_type" required>
-                        <option value="" disabled selected>Select your account type</option>
-                        <option value="influencer">Influencer</option>
-                        <option value="sponsor">Sponsor</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Continue</button>
-            </form>
+            <p class="lead">Please choose whether you are an Influencer or a Sponsor to proceed.</p>
+            <a class="btn btn-primary btn-lg mr-2" href="{{ url_for('account_type', choice='influencer') }}" role="button">I am an Influencer</a>
+            <a class="btn btn-secondary btn-lg" href="{{ url_for('account_type', choice='sponsor') }}" role="button">I am a Sponsor</a>
         </div>
     </div>
 </body>
