@@ -144,37 +144,51 @@ def sponsor_campaigns(username):
         product_link = request.form.get('product_link')
         requirements = request.form.get('requirements')
         budget = request.form.get('budget')
-        live_date = request.form.get('live_date')
         target_gender = request.form.get('target_gender')
         target_age = request.form.get('target_age')
         target_location = request.form.get('target_location')
+
+        try:
+            # Convert date strings to date objects
+            start_date = datetime.strptime(request.form.get('start_date'), '%Y-%m-%d').date()
+            end_date = datetime.strptime(request.form.get('end_date'), '%Y-%m-%d').date()
+            live_date = datetime.strptime(request.form.get('live_date'), '%Y-%m-%d').date()
+            
+            # Create new campaign instance
+            new_campaign = Campaign(
+                name=request.form.get('campaign_name'), 
+                description=request.form.get('campaign_description'),  
+                start_date=start_date,  # Date object
+                end_date=end_date,      # Date object
+                budget=float(budget),
+                visibility=request.form.get('visibility'),
+                goals=request.form.get('goals'),
+                sponsor_id=sponsor.id,
+                product_link=product_link,
+                requirements=requirements,
+                target_gender=target_gender,
+                target_age=target_age,
+                target_location=target_location,
+                live_date=live_date  # Date object
+            )
+            
+            db.session.add(new_campaign)
+            db.session.commit()
+            flash('Campaign created successfully!', 'success')
+            return redirect(url_for('sponsor_dashboard', username=username))
         
-        # Create new campaign instance
-        new_campaign = Campaign(
-            name=request.form.get('campaign_name'),  # Assuming you have a field for campaign name
-            description=request.form.get('campaign_description'),  # Assuming you have a field for campaign description
-            start_date=request.form.get('start_date'),
-            end_date=request.form.get('end_date'),
-            budget=budget,
-            visibility=request.form.get('visibility'),
-            goals=request.form.get('goals'),
-            sponsor_id=sponsor.id,
-            product_link=product_link,
-            requirements=requirements,
-            target_gender=target_gender,
-            target_age=target_age,
-            target_location=target_location,
-            live_date=live_date
-        )
+        except ValueError as ve:
+            flash(f'Invalid date format: {ve}', 'danger')
+            return redirect(url_for('sponsor_campaigns', username=username))
         
-        db.session.add(new_campaign)
-        db.session.commit()
-        
-        flash('Campaign created successfully!', 'success')
-        return redirect(url_for('sponsor_dashboard', username=username))
-    
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error creating campaign: {str(e)}', 'danger')
+            return redirect(url_for('sponsor_campaigns', username=username))
+
     campaigns = Campaign.query.filter_by(sponsor_id=sponsor.id).all()
     return render_template('sponsor_campaigns.html', sponsor=sponsor, campaigns=campaigns)
+
 
 @app.route('/admin/dashboard')
 def admin_dashboard():
