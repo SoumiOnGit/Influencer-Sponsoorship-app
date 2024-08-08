@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsor Dashboard - Campaigns</title>
+</head>
+<body>
+    <h1>Welcome, {{ sponsor.name }}!</h1>
+    <p>Unlock influencer for your brand</p>
+    
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('sponsor_dashboard', username=sponsor.username) }}">Dashboard</a></li>
+            <li><a href="{{ url_for('sponsor_campaigns', username=sponsor.username) }}">Campaigns</a></li>
+            <li><a href="#">Influencer Discovery</a></li>
+            <li><a href="#">Account Tracking</a></li>
+            <li><a href="#">Campaign Tools</a></li>
+            <li><a href="#">Campaign Analytics</a></li>
+        </ul>
+    </nav>
+    
+    <h2>Campaigns</h2>
+    <ul>
+        {% for campaign in campaigns %}
+            <li>{{ campaign.name }} - {{ campaign.description }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Create Campaign</h2>
+    <form method="post">
+        <label for="campaign_name">Campaign Name:</label>
+        <input type="text" id="campaign_name" name="campaign_name" required><br>
+        
+        <label for="campaign_description">Campaign Description:</label>
+        <input type="text" id="campaign_description" name="campaign_description" required><br>
+        
+        <label for="category">Category:</label>
+        <select id="category" name="category">
+            <option value="Food">Food</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Beauty">Beauty</option>
+            <!-- Add other categories here -->
+        </select><br>
+        
+        <label for="product_link">Product Link:</label>
+        <input type="url" id="product_link" name="product_link"><br>
+        
+        <label for="requirements">Requirements:</label>
+        <textarea id="requirements" name="requirements"></textarea><br>
+        
+        <label for="budget">Budget:</label>
+        <input type="number" id="budget" name="budget" step="0.01"><br>
+        
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" required><br>
+        
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" required><br>
+        
+        <label for="visibility">Visibility:</label>
+        <input type="text" id="visibility" name="visibility"><br>
+        
+        <label for="goals">Goals:</label>
+        <input type="text" id="goals" name="goals"><br>
+        
+        <label for="live_date">Live Date:</label>
+        <input type="date" id="live_date" name="live_date"><br>
+        
+        <label for="target_gender">Target Gender:</label>
+        <select id="target_gender" name="target_gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="All">All</option>
+        </select><br>
+        
+        <label for="target_age">Target Age:</label>
+        <input type="text" id="target_age" name="target_age"><br>
+        
+        <label for="target_location">Target Location:</label>
+        <input type="text" id="target_location" name="target_location"><br>
+        
+        <button type="submit">Create Campaign</button>
+    </form>
+</body>
+</html>

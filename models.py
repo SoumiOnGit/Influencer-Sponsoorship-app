@@ -33,11 +33,9 @@ class Admin(db.Model):
         self.password = password
         self.email = email
 
-
-
 class Campaign(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
@@ -45,6 +43,15 @@ class Campaign(db.Model):
     visibility = db.Column(db.String(10), nullable=False)
     goals = db.Column(db.Text, nullable=False)
     sponsor_id = db.Column(db.Integer, db.ForeignKey('sponsor.id'), nullable=False)
+    product_link = db.Column(db.String(255))
+    requirements = db.Column(db.Text)
+    target_gender = db.Column(db.String(10))
+    target_age = db.Column(db.String(50))
+    target_location = db.Column(db.String(100))
+    live_date = db.Column(db.Date)
+
+    def __repr__(self):
+        return f'<Campaign {self.name}>'
 
 class AdRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)

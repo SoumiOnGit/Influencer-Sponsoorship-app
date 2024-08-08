@@ -135,6 +135,47 @@ def sponsor_dashboard(username):
     sponsor = Sponsor.query.filter_by(username=username).first_or_404()
     return render_template('sponsor_dashboard.html', sponsor=sponsor)
 
+@app.route('/sponsor/<username>/dashboard/campaign', methods=['GET', 'POST'])
+def sponsor_campaigns(username):
+    sponsor = Sponsor.query.filter_by(username=username).first_or_404()
+    if request.method == 'POST':
+        # Extract form data
+        category = request.form.get('category')
+        product_link = request.form.get('product_link')
+        requirements = request.form.get('requirements')
+        budget = request.form.get('budget')
+        live_date = request.form.get('live_date')
+        target_gender = request.form.get('target_gender')
+        target_age = request.form.get('target_age')
+        target_location = request.form.get('target_location')
+        
+        # Create new campaign instance
+        new_campaign = Campaign(
+            name=request.form.get('campaign_name'),  # Assuming you have a field for campaign name
+            description=request.form.get('campaign_description'),  # Assuming you have a field for campaign description
+            start_date=request.form.get('start_date'),
+            end_date=request.form.get('end_date'),
+            budget=budget,
+            visibility=request.form.get('visibility'),
+            goals=request.form.get('goals'),
+            sponsor_id=sponsor.id,
+            product_link=product_link,
+            requirements=requirements,
+            target_gender=target_gender,
+            target_age=target_age,
+            target_location=target_location,
+            live_date=live_date
+        )
+        
+        db.session.add(new_campaign)
+        db.session.commit()
+        
+        flash('Campaign created successfully!', 'success')
+        return redirect(url_for('sponsor_dashboard', username=username))
+    
+    campaigns = Campaign.query.filter_by(sponsor_id=sponsor.id).all()
+    return render_template('sponsor_campaigns.html', sponsor=sponsor, campaigns=campaigns)
+
 @app.route('/admin/dashboard')
 def admin_dashboard():
     return 'Admin Dashboard'
