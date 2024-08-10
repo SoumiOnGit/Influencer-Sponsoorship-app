@@ -17,6 +17,16 @@
                     <br>Followers: {{ influencer.followers }}
                     <br>Niche: {{ influencer.niche }}
                     <br>Reach: {{ influencer.reach }}
+                    <br>
+                    {% if not influencer.flagged %}
+                        <form action="{{ url_for('flag_influencer', influencer_id=influencer.id) }}" method="post">
+                            <button type="submit" class="btn btn-warning">Flag</button>
+                        </form>
+                    {% else %}
+                        <form action="{{ url_for('unflag_influencer', influencer_id=influencer.id) }}" method="post">
+                            <button type="submit" class="btn btn-success">Unflag</button>
+                        </form>
+                    {% endif %}
                 </li>
             {% else %}
                 <li class="list-group-item">No influencers found.</li>

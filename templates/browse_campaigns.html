@@ -18,6 +18,16 @@
                     <br>End Date: {{ campaign.end_date }}
                     <br>Budget: {{ campaign.budget }}
                     <br>Visibility: {{ campaign.visibility }}
+                    <br>
+                    {% if not campaign.flagged %}
+                        <form action="{{ url_for('flag_campaign', campaign_id=campaign.id) }}" method="post">
+                            <button type="submit" class="btn btn-warning">Flag</button>
+                        </form>
+                    {% else %}
+                        <form action="{{ url_for('unflag_campaign', campaign_id=campaign.id) }}" method="post">
+                            <button type="submit" class="btn btn-success">Unflag</button>
+                        </form>
+                    {% endif %}
                 </li>
             {% else %}
                 <li class="list-group-item">No campaigns found.</li>

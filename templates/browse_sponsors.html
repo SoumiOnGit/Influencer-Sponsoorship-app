@@ -17,6 +17,16 @@
                     <br>Company Name: {{ sponsor.companyname }}
                     <br>Industry: {{ sponsor.industry }}
                     <br>Budget: {{ sponsor.budget }}
+                    <br>
+                    {% if not sponsor.flagged %}
+                        <form action="{{ url_for('flag_sponsor', sponsor_id=sponsor.id) }}" method="post">
+                            <button type="submit" class="btn btn-warning">Flag</button>
+                        </form>
+                    {% else %}
+                        <form action="{{ url_for('unflag_sponsor', sponsor_id=sponsor.id) }}" method="post">
+                            <button type="submit" class="btn btn-success">Unflag</button>
+                        </form>
+                    {% endif %}
                 </li>
             {% else %}
                 <li class="list-group-item">No sponsors found.</li>
