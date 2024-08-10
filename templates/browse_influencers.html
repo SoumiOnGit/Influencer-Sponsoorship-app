@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Influencers</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>All Influencers</h1>
+        <ul class="list-group">
+            {% for influencer in influencers %}
+                <li class="list-group-item">
+                    <strong>{{ influencer.name }}</strong> - {{ influencer.username }}
+                    <br>Email: {{ influencer.email }}
+                    <br>Followers: {{ influencer.followers }}
+                    <br>Niche: {{ influencer.niche }}
+                    <br>Reach: {{ influencer.reach }}
+                </li>
+            {% else %}
+                <li class="list-group-item">No influencers found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

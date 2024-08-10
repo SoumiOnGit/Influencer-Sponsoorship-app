@@ -19,7 +19,12 @@
             margin-bottom: 40px;
         }
         .chart-container {
-            width: 45%;
+            width: 30%; /* Adjusted width */
+            height: 250px; /* Added height */
+        }
+        canvas {
+            max-width: 100%;
+            max-height: 100%;
         }
         table {
             width: 100%;
@@ -39,6 +44,15 @@
         .no-data {
             color: #999;
             text-align: center;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .list-group {
+            margin-bottom: 20px;
+        }
+        .list-group-item {
+            cursor: pointer;
         }
     </style>
 </head>
@@ -148,6 +162,15 @@
     {% else %}
         <p class="no-data">No flagged campaigns found.</p>
     {% endif %}
+
+    <div class="container mt-4">
+        <h2>Navigation</h2>
+        <div class="list-group">
+            <a href="{{ url_for('browse_influencers') }}" class="list-group-item list-group-item-action">Browse All Influencers</a>
+            <a href="{{ url_for('browse_sponsors') }}" class="list-group-item list-group-item-action">Browse All Sponsors</a>
+            <a href="{{ url_for('browse_campaigns') }}" class="list-group-item list-group-item-action">Browse All Campaigns</a>
+        </div>
+    </div>
 
     <script>
         // Data for Active Users Chart

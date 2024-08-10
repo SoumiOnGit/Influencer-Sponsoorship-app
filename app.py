@@ -414,12 +414,38 @@ def delete_ad_request(username, campaignid, ad_request_id):
 
 
 
+@app.route('/admin/browse/influencers')
+def browse_influencers():
+    if 'user' not in session or session['user'] != 'admin':
+        abort(403)
+    
+    influencers = Influencer.query.all()
+    return render_template('browse_influencers.html', influencers=influencers)
+
+@app.route('/admin/browse/sponsors')
+def browse_sponsors():
+    if 'user' not in session or session['user'] != 'admin':
+        abort(403)
+    
+    sponsors = Sponsor.query.all()
+    return render_template('browse_sponsors.html', sponsors=sponsors)
+
+@app.route('/admin/browse/campaigns')
+def browse_campaigns():
+    if 'user' not in session or session['user'] != 'admin':
+        abort(403)
+    
+    campaigns = Campaign.query.all()
+    return render_template('browse_campaigns.html', campaigns=campaigns)
+
+
+
 
 @app.route('/logout')
 def logout():
     session.pop('user', None)  # Clear the session
     flash('You have been logged out.', 'success')
-    return redirect(url_for('login'))  # Redirect to the login page
+    return redirect(url_for('login')) 
 
 
 
