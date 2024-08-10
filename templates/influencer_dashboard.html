@@ -18,7 +18,8 @@
                     <a class="nav-link" href="{{ url_for('influencer_campaigns', username=influencer.username) }}">Campaigns</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profile Settings</a>
+                    <a href="{{ url_for('edit_influencer_profile', username=influencer.username) }}">Edit Profile</a>
+
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>

@@ -131,6 +131,27 @@ def influencer_dashboard(username):
     return render_template('influencer_dashboard.html', influencer=influencer, accepted_ad_requests=accepted_ad_requests)
 
 
+@app.route('/influencer/<username>/edit_profile', methods=['GET', 'POST'])
+def edit_influencer_profile(username):
+    influencer = Influencer.query.filter_by(username=username).first_or_404()
+
+    if request.method == 'POST':
+        # Update influencer details
+        influencer.name = request.form.get('name')
+        influencer.password = request.form.get('password')
+        influencer.email = request.form.get('email')
+        influencer.followers = int(request.form.get('followers'))
+        influencer.niche = request.form.get('niche')
+        influencer.reach = int(request.form.get('reach'))
+
+        db.session.commit()
+        flash('Profile updated successfully!', 'success')
+        return redirect(url_for('influencer_dashboard', username=username))
+
+    return render_template('edit_influencer_profile.html', influencer=influencer)
+
+
+
 @app.route('/sponsor/<username>/dashboard')
 def sponsor_dashboard(username):
     sponsor = Sponsor.query.filter_by(username=username).first_or_404()
@@ -205,7 +226,8 @@ def view_campaign(username, campaignid):
 def create_ad_request(username, campaignid):
     sponsor = Sponsor.query.filter_by(username=username).first_or_404()
     campaign = Campaign.query.get_or_404(campaignid)
-    
+    influencers = Influencer.query.all()  # Query all influencers
+
     if request.method == 'POST':
         influencer_username = request.form.get('influencer_username')
         influencer = Influencer.query.filter_by(username=influencer_username).first_or_404()
@@ -225,7 +247,7 @@ def create_ad_request(username, campaignid):
         # Redirect to the campaign page
         return redirect(url_for('view_campaign', username=username, campaignid=campaignid))
     
-    return render_template('create_ad_request.html', campaign=campaign, sponsor=sponsor)
+    return render_template('create_ad_request.html', campaign=campaign, sponsor=sponsor, influencers=influencers)
 
 
 
