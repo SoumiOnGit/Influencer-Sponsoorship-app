@@ -21,7 +21,7 @@
                     <a class="nav-link" href="#">Profile Settings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                 </li>
             </ul>
         </div>
@@ -29,12 +29,18 @@
 
     <div class="container mt-4">
         <h1>Welcome, {{ influencer.name }}</h1>
-        <h2>My Campaigns</h2>
+        <h2>Accepted Ad Requests</h2>
         <ul class="list-group">
-            {% for campaign in campaigns %}
-                <li class="list-group-item">{{ campaign.title }} - {{ campaign.description }}</li>
+            {% for ad_request in accepted_ad_requests %}
+                <li class="list-group-item">
+                    <strong>Campaign:</strong> {{ ad_request.campaign.name }} <br>
+                    <strong>Description:</strong> {{ ad_request.campaign.description }} <br>
+                    <strong>Messages:</strong> {{ ad_request.messages }} <br>
+                    <strong>Requirements:</strong> {{ ad_request.requirements }} <br>
+                    <strong>Payment Amount:</strong> {{ ad_request.payment_amount }}
+                </li>
             {% else %}
-                <li class="list-group-item">No campaigns found.</li>
+                <li class="list-group-item">No accepted ad requests found.</li>
             {% endfor %}
         </ul>
     </div>

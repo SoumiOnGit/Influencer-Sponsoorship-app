@@ -127,8 +127,9 @@ def login():
 @app.route('/influencer/<username>/dashboard')
 def influencer_dashboard(username):
     influencer = Influencer.query.filter_by(username=username).first_or_404()
-    campaigns = []  # This should be replaced with actual campaign data
-    return render_template('influencer_dashboard.html', influencer=influencer, campaigns=campaigns)
+    accepted_ad_requests = AdRequest.query.filter_by(influencer_id=influencer.id, status='Accepted').all()
+    return render_template('influencer_dashboard.html', influencer=influencer, accepted_ad_requests=accepted_ad_requests)
+
 
 @app.route('/sponsor/<username>/dashboard')
 def sponsor_dashboard(username):
