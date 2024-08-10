@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Ad Request</title>
+</head>
+<body>
+    <h1>Create Ad Request for {{ campaign.name }}</h1>
+    
+    <form action="{{ url_for('create_ad_request', username=sponsor.username, campaignid=campaign.id) }}" method="post">
+        <label for="influencer_username">Influencer Username:</label>
+        <input type="text" id="influencer_username" name="influencer_username" required>
+        
+        <label for="messages">Messages:</label>
+        <textarea id="messages" name="messages"></textarea>
+        
+        <label for="requirements">Requirements:</label>
+        <textarea id="requirements" name="requirements" required></textarea>
+        
+        <label for="payment_amount">Payment Amount:</label>
+        <input type="number" id="payment_amount" name="payment_amount" step="0.01" required>
+        
+        <button type="submit">Create Ad Request</button>
+    </form>
+    
+    <a href="{{ url_for('view_campaign', username=sponsor.username, campaignid=campaign.id) }}">Back to Campaign</a>
+</body>
+</html>

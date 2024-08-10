@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaigns Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, {{ sponsor.name }}</h1>
+    <h2>Your Campaigns</h2>
+
+    <ul>
+        {% for campaign in campaigns %}
+            <li>
+                <a href="{{ url_for('view_campaign', username=sponsor.username, campaignid=campaign.id) }}">
+                    {{ campaign.name }} ({{ campaign.start_date }} - {{ campaign.end_date }})
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('create_campaign', username=sponsor.username) }}">Create New Campaign</a>
+</body>
+</html>

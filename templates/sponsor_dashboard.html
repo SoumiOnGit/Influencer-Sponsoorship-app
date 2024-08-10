@@ -12,7 +12,8 @@
     <nav>
         <ul>
             <li><a href="{{ url_for('sponsor_dashboard', username=sponsor.username) }}">Dashboard</a></li>
-            <li><a href="{{ url_for('sponsor_campaigns', username=sponsor.username) }}">Campaigns</a></li>
+            <!-- Updated the endpoint here -->
+            <li><a href="{{ url_for('sponsor_campaign_dashboard', username=sponsor.username) }}">Campaigns</a></li>
             <li><a href="#">Influencer Discovery</a></li>
             <li><a href="#">Account Tracking</a></li>
             <li><a href="#">Campaign Tools</a></li>

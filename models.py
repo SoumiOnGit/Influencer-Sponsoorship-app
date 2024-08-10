@@ -9,6 +9,9 @@ class Influencer(db.Model):
     followers = db.Column(db.Integer, nullable=False)
     niche = db.Column(db.String(100), nullable=False)
     reach = db.Column(db.Integer, nullable=False)
+    flagged = db.Column(db.Boolean, default=False)
+    ad_requests = db.relationship('AdRequest', backref='influencer', lazy=True)
+
 
 class Sponsor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -19,6 +22,9 @@ class Sponsor(db.Model):
     companyname = db.Column(db.String(120), nullable=False)
     industry = db.Column(db.String(120), nullable=False)
     budget = db.Column(db.Float, nullable=False)
+    flagged = db.Column(db.Boolean, default=False)
+    campaigns = db.relationship('Campaign', backref='sponsor', lazy=True)
+
 
 class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -32,6 +38,7 @@ class Admin(db.Model):
         self.name = name
         self.password = password
         self.email = email
+
 
 class Campaign(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -49,9 +56,12 @@ class Campaign(db.Model):
     target_age = db.Column(db.String(50))
     target_location = db.Column(db.String(100))
     live_date = db.Column(db.Date)
+    flagged = db.Column(db.Boolean, default=False)
+    ad_requests = db.relationship('AdRequest', backref='campaign', lazy=True)
 
     def __repr__(self):
         return f'<Campaign {self.name}>'
+
 
 class AdRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
