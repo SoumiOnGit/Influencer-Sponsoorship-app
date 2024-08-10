@@ -26,6 +26,8 @@ class Sponsor(db.Model):
     campaigns = db.relationship('Campaign', backref='sponsor', lazy=True)
 
 
+
+
 class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
