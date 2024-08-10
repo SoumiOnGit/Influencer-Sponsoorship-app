@@ -309,29 +309,6 @@ def admin_dashboard():
     )
 
 
-
-@app.route('/admin/flag_user/<user_type>/<user_id>')
-def flag_user(user_type, user_id):
-    if user_type == 'influencer':
-        user = Influencer.query.get_or_404(user_id)
-    elif user_type == 'sponsor':
-        user = Sponsor.query.get_or_404(user_id)
-    else:
-        abort(404)
-
-    user.flagged = True
-    db.session.commit()
-    return redirect(url_for('admin_dashboard'))
-
-@app.route('/admin/flag_campaign/<campaign_id>')
-def flag_campaign(campaign_id):
-    campaign = Campaign.query.get_or_404(campaign_id)
-    campaign.flagged = True
-    db.session.commit()
-    return redirect(url_for('admin_dashboard'))
-
-
-
 @app.route('/sponsor/<username>/campaign/<campaignid>/update', methods=['GET', 'POST'])
 def update_campaign(username, campaignid):
     sponsor = Sponsor.query.filter_by(username=username).first_or_404()
@@ -437,6 +414,56 @@ def browse_campaigns():
     
     campaigns = Campaign.query.all()
     return render_template('browse_campaigns.html', campaigns=campaigns)
+
+
+
+@app.route('/flag/influencer/<int:influencer_id>', methods=['POST'])
+def flag_influencer(influencer_id):
+    influencer = Influencer.query.get(influencer_id)
+    if influencer:
+        influencer.flagged = True
+        db.session.commit()
+    return redirect(url_for('browse_influencers'))
+
+@app.route('/unflag/influencer/<int:influencer_id>', methods=['POST'])
+def unflag_influencer(influencer_id):
+    influencer = Influencer.query.get(influencer_id)
+    if influencer:
+        influencer.flagged = False
+        db.session.commit()
+    return redirect(url_for('browse_influencers'))
+
+@app.route('/flag/sponsor/<int:sponsor_id>', methods=['POST'])
+def flag_sponsor(sponsor_id):
+    sponsor = Sponsor.query.get(sponsor_id)
+    if sponsor:
+        sponsor.flagged = True
+        db.session.commit()
+    return redirect(url_for('browse_sponsors'))
+
+@app.route('/unflag/sponsor/<int:sponsor_id>', methods=['POST'])
+def unflag_sponsor(sponsor_id):
+    sponsor = Sponsor.query.get(sponsor_id)
+    if sponsor:
+        sponsor.flagged = False
+        db.session.commit()
+    return redirect(url_for('browse_sponsors'))
+
+@app.route('/flag/campaign/<int:campaign_id>', methods=['POST'])
+def flag_campaign(campaign_id):
+    campaign = Campaign.query.get(campaign_id)
+    if campaign:
+        campaign.flagged = True
+        db.session.commit()
+    return redirect(url_for('browse_campaigns'))
+
+@app.route('/unflag/campaign/<int:campaign_id>', methods=['POST'])
+def unflag_campaign(campaign_id):
+    campaign = Campaign.query.get(campaign_id)
+    if campaign:
+        campaign.flagged = False
+        db.session.commit()
+    return redirect(url_for('browse_campaigns'))
 
 
 
