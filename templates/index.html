@@ -5,14 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f3f0; /* Off white */
+        }
+        .jumbotron {
+            background-color: #f8f3f0; /* Peach */
+            color: #000; /* Black text */
+            text-align: center;
+            border-radius: 0;
+            padding: 4rem 1rem;
+            position: relative; /* Added to align buttons correctly */
+            margin: 0; /* Remove margin to align with logo */
+        }
+        .jumbotron a {
+            margin: 0.5rem;
+            padding: 1rem 2rem;
+        }
+        .btn-primary {
+            background-color: #f1a177; /* Light peach */
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #a75151; /* Peach */
+        }
+        .btn-secondary {
+            background-color: #f1a177; /* Light grey */
+            border: none;
+        }
+        .btn-secondary:hover {
+            background-color: #a75151; /* Peach */
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 45%;
+            transform: translateX(-50%);
+            width: 300px; /* Adjusted width for smaller size */
+            height: auto; /* Maintain aspect ratio */
+            z-index: 1; /* Ensure logo is on top */
+        }
+        .btn-container {
+            position: absolute;
+            top: 20px;
+            right: -250px;
+            z-index: 1; /* Ensure buttons are on top */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="jumbotron mt-5">
-            <h1 class="display-4">Welcome to the Platform!</h1>
-            <p class="lead">Select your account type to get started.</p>
-            <a class="btn btn-primary btn-lg" href="{{ url_for('account_type') }}" role="button">Get Started</a>
-            <a class="btn btn-secondary btn-lg" href="{{ url_for('login') }}" role="button">Login</a>
+        <div class="position-relative">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+            <div class="btn-container">
+                <a class="btn btn-primary btn-lg" href="{{ url_for('account_type') }}" role="button">Get Started</a>
+                <a class="btn btn-secondary btn-lg" href="{{ url_for('login') }}" role="button">Login</a>
+            </div>
+            <div class="jumbotron mt-5">
+                <!-- Optionally, you can add additional content here -->
+            </div>
         </div>
     </div>
 </body>

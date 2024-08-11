@@ -16,9 +16,13 @@ def create_default_admin():
         db.session.add(default_admin)
         db.session.commit()
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+
 
 @app.route('/account_type')
 def account_type():
@@ -29,13 +33,19 @@ def account_type():
         return redirect(url_for('sponsor'))
     return render_template('account_type.html')
 
+
 @app.route('/influencer')
 def influencer():
     return render_template('influencer.html')
 
+
+
+
 @app.route('/sponsor')
 def sponsor():
     return render_template('sponsor.html')
+
+
 
 @app.route('/influencer/register', methods=['GET', 'POST'])
 def influencer_register():
@@ -149,7 +159,6 @@ def edit_influencer_profile(username):
         return redirect(url_for('influencer_dashboard', username=username))
 
     return render_template('edit_influencer_profile.html', influencer=influencer)
-
 
 
 @app.route('/sponsor/<username>/influencer_discovery')
