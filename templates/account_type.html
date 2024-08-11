@@ -5,11 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Account Type</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f3f0; /* Set the background color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh; 
+        }
+        
+        .container {
+            text-align: center;
+        }
+        
+        .jumbotron {
+            background-color: #fff; /* Optional: Set a background color for jumbotron */
+            padding: 2rem; /* Adjust padding if needed */
+            border-radius: 0.3rem; /* Optional: Rounded corners for jumbotron */
+        }
+        .btn-primary {
+            background-color:#D71334; 
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #800000; /* Dark red */
+        }
+
+        .btn-secondary {
+            background-color:#D71334; /
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #800000; /* Peach */
+        }
+        
+    </style>
+
 </head>
 <body>
     <div class="container">
         <div class="jumbotron mt-5">
-            <h1 class="display-4">Select Your Account Type</h1>
+            <h2 class="display-4">Select Your Account Type</h2>
             <p class="lead">Please choose whether you are an Influencer or a Sponsor to proceed.</p>
             <a class="btn btn-primary btn-lg mr-2" href="{{ url_for('account_type', choice='influencer') }}" role="button">I am an Influencer</a>
             <a class="btn btn-secondary btn-lg" href="{{ url_for('account_type', choice='sponsor') }}" role="button">I am a Sponsor</a>
