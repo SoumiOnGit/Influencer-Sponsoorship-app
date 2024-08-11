@@ -3,3 +3,4 @@ login
 influencer
 inf register
 inf dashboard
+inf campaign

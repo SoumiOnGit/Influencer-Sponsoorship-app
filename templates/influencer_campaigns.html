@@ -4,6 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Influencer Campaigns</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F1E1B3;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        li {
+            background-color: #FFF8DC;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        p {
+            margin: 8px 0;
+            color: #555;
+        }
+        form {
+            text-align: right;
+        }
+        button {
+            padding: 10px 15px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button[type="submit"][value="Accepted"] {
+            background-color: #4CAF50;
+            color: white;
+        }
+        button[type="submit"][value="Rejected"] {
+            background-color: #F44336;
+            color: white;
+        }
+        li:last-child {
+            margin-bottom: 0;
+        }
+        li.no-ad-requests {
+            text-align: center;
+            color: #777;
+        }
+    </style>
 </head>
 <body>
     <h1>Ad Requests for {{ influencer.username }}</h1>
@@ -11,19 +66,19 @@
     <ul>
         {% for ad_request in ad_requests %}
             <li>
-                <p>Campaign: {{ ad_request.campaign.name }}</p>
-                <p>Description: {{ ad_request.campaign.description }}</p>
-                <p>Messages: {{ ad_request.messages }}</p>
-                <p>Requirements: {{ ad_request.requirements }}</p>
-                <p>Payment Amount: {{ ad_request.payment_amount }}</p>
-                <p>Status: {{ ad_request.status }}</p>
+                <p><strong>Campaign:</strong> {{ ad_request.campaign.name }}</p>
+                <p><strong>Description:</strong> {{ ad_request.campaign.description }}</p>
+                <p><strong>Messages:</strong> {{ ad_request.messages }}</p>
+                <p><strong>Requirements:</strong> {{ ad_request.requirements }}</p>
+                <p><strong>Payment Amount:</strong> {{ ad_request.payment_amount }}</p>
+                <p><strong>Status:</strong> {{ ad_request.status }}</p>
                 <form action="{{ url_for('update_ad_request_status', ad_request_id=ad_request.id) }}" method="post">
                     <button type="submit" name="status" value="Accepted">Accept</button>
                     <button type="submit" name="status" value="Rejected">Reject</button>
                 </form>
             </li>
         {% else %}
-            <li>No ad requests found.</li>
+            <li class="no-ad-requests">No ad requests found.</li>
         {% endfor %}
     </ul>
 </body>
