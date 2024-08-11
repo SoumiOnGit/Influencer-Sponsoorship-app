@@ -6,6 +6,9 @@
     <title>Influencer Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        body {
+            background-color: #F1E1B3;;
+        }
         .sidebar {
             min-width: 200px;
             max-width: 200px;
@@ -18,10 +21,13 @@
         .content {
             margin-left: 220px;
             padding: 20px;
+            background-color: #F1E1B3;
         }
 
         .sidebar .nav-link {
             padding: 10px 20px;
+            font-size: 1.5rem; 
+            color: #3D0008;
         }
 
         .sidebar .nav-link:hover {
@@ -31,7 +37,7 @@
 </head>
 <body class="d-flex">
     <div class="sidebar d-flex flex-column">
-        <a class="navbar-brand" href="#">Influencer App</a>
+        <h4 class="text-center">Welcome, {{ influencer.name }}</h4>
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('influencer_dashboard', username=influencer.username) }}">Dashboard</a>
@@ -49,8 +55,7 @@
     </div>
 
     <div class="content container mt-4">
-        <h1>Welcome, {{ influencer.name }}</h1>
-        <h2>Accepted Ad Requests</h2>
+        <h3>Active Ad Requests</h3>
         <ul class="list-group">
             {% for ad_request in accepted_ad_requests %}
                 <li class="list-group-item">
