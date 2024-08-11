@@ -12,19 +12,14 @@
             margin: 20px;
             position: relative;
         }
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow effect */
-        }
-        h2 {
+        h1, h2 {
             color: #333;
             margin-bottom: 20px;
         }
         .stats-container {
             display: flex;
             justify-content: space-around;
-            margin-bottom: 40px;
+            margin: 80px 0 40px 0;
         }
         .chart-container {
             width: 30%; 
@@ -76,6 +71,29 @@
         .list-group-item:hover {
             background-color: #800000;
         }
+        .summary-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            text-align: center;
+        }
+        .summary-box {
+            width: 30%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .summary-box h2 {
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #555;
+        }
+        .summary-box p {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -97,15 +115,21 @@
         </div>
     </div>
 
-    <h2>Total Users</h2>
-    <p>Influencers: {{ total_influencers }}</p>
-    <p>Sponsors: {{ total_sponsors }}</p>
-
-    <h2>Total Campaigns</h2>
-    <p>{{ total_campaigns }}</p>
-
-    <h2>Total Ad Requests</h2>
-    <p>{{ total_ad_requests }}</p>
+    <div class="summary-container">
+        <div class="summary-box">
+            <h2>Total Users</h2>
+            <p>Influencers: {{ total_influencers }}</p>
+            <p>Sponsors: {{ total_sponsors }}</p>
+        </div>
+        <div class="summary-box">
+            <h2>Total Campaigns</h2>
+            <p>{{ total_campaigns }}</p>
+        </div>
+        <div class="summary-box">
+            <h2>Total Ad Requests</h2>
+            <p>{{ total_ad_requests }}</p>
+        </div>
+    </div>
 
     <h2>Flagged Influencers</h2>
     {% if flagged_influencers %}
