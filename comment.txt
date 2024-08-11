@@ -1,17 +1,5 @@
-<style>
-        body {
-            background-color: #E34234;
-        }
-
-        .btn-custom {
-            background-color: #D71334;
-            border-color: #D71334;
-            color: white;
-        }
-
-        .btn-custom:hover {
-            background-color: #800000;
-            border-color: none;
-            color: white;
-        }
-    </style>
+index
+login
+influencer
+inf register
+inf dashboard

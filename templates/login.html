@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #E34234; /* Background color of the page */
+        }
+        .btn-primary {
+            background-color: #D71334; /* Login button background color */
+            border-color: #D71334; /* Login button border color */
+        }
+        .btn-primary:hover {
+            background-color: #800000; /* Login button hover background color */
+            border-color: #800000; /* Login button hover border color */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -26,7 +39,7 @@
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>
         </div>
-        <!-- Display only login-related flash messages -->
+        
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 <div class="alert alert-dismissible fade show" role="alert">
