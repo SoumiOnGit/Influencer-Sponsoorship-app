@@ -8,10 +8,18 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #F1E1B3;
             margin: 20px;
+            position: relative;
         }
-        h1, h2 {
+        h1 {
             color: #333;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow effect */
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
         }
         .stats-container {
             display: flex;
@@ -19,8 +27,8 @@
             margin-bottom: 40px;
         }
         .chart-container {
-            width: 30%; /* Adjusted width */
-            height: 250px; /* Added height */
+            width: 30%; 
+            height: 250px; 
         }
         canvas {
             max-width: 100%;
@@ -44,19 +52,39 @@
         .no-data {
             color: #999;
             text-align: center;
+            margin: 20px 0;
         }
         .container {
-            margin-top: 20px;
+            margin-top: 40px;
         }
         .list-group {
-            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
         }
         .list-group-item {
             cursor: pointer;
+            background-color: #D71334;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+        .list-group-item:hover {
+            background-color: #800000;
         }
     </style>
 </head>
 <body>
+
+    <div class="list-group">
+        <a href="{{ url_for('browse_influencers') }}" class="list-group-item btn-primary">Browse All Influencers</a>
+        <a href="{{ url_for('browse_sponsors') }}" class="list-group-item btn-primary">Browse All Sponsors</a>
+        <a href="{{ url_for('browse_campaigns') }}" class="list-group-item btn-primary">Browse All Campaigns</a>
+    </div>
 
     <h1>Admin Dashboard</h1>
 
@@ -163,17 +191,7 @@
         <p class="no-data">No flagged campaigns found.</p>
     {% endif %}
 
-    <div class="container mt-4">
-        <h2>Navigation</h2>
-        <div class="list-group">
-            <a href="{{ url_for('browse_influencers') }}" class="list-group-item list-group-item-action">Browse All Influencers</a>
-            <a href="{{ url_for('browse_sponsors') }}" class="list-group-item list-group-item-action">Browse All Sponsors</a>
-            <a href="{{ url_for('browse_campaigns') }}" class="list-group-item list-group-item-action">Browse All Campaigns</a>
-        </div>
-    </div>
-
     <script>
-        // Data for Active Users Chart
         var activeUsersData = {
             labels: ['Accepted Ad Requests', 'No Ad Requests'],
             datasets: [{
@@ -185,7 +203,6 @@
             }]
         };
 
-        // Data for Active Campaigns Chart
         var activeCampaignsData = {
             labels: ['Public Campaigns', 'Private Campaigns'],
             datasets: [{
@@ -197,7 +214,6 @@
             }]
         };
 
-        // Create Active Users Chart (Pie Chart)
         var ctx1 = document.getElementById('activeUsersChart').getContext('2d');
         var activeUsersChart = new Chart(ctx1, {
             type: 'pie',
@@ -212,7 +228,6 @@
             }
         });
 
-        // Create Active Campaigns Chart (Pie Chart)
         var ctx2 = document.getElementById('activeCampaignsChart').getContext('2d');
         var activeCampaignsChart = new Chart(ctx2, {
             type: 'pie',

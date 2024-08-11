@@ -39,21 +39,6 @@
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>
         </div>
-        
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="alert alert-dismissible fade show" role="alert">
-                    {% for category, message in messages %}
-                        {% if category in ['success', 'danger'] %}
-                            <div class="alert alert-{{ category }}">{{ message }}</div>
-                        {% endif %}
-                    {% endfor %}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            {% endif %}
-        {% endwith %}
     </div>
 </body>
 </html>
