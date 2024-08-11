@@ -152,6 +152,20 @@ def edit_influencer_profile(username):
 
 
 
+@app.route('/sponsor/<username>/influencer_discovery')
+def influencer_discovery(username):
+    sponsor = Sponsor.query.filter_by(username=username).first_or_404()
+    influencers = Influencer.query.all()  # Query all influencers
+    return render_template('influencer_discovery.html', sponsor=sponsor, influencers=influencers)
+
+
+
+@app.route('/influencer/<int:influencer_id>/profile')
+def view_influencer_profile(influencer_id):
+    influencer = Influencer.query.get_or_404(influencer_id)
+    return render_template('influencer_profile.html', influencer=influencer)
+
+
 @app.route('/sponsor/<username>/dashboard')
 def sponsor_dashboard(username):
     sponsor = Sponsor.query.filter_by(username=username).first_or_404()

@@ -13,7 +13,7 @@
         <ul>
             <li><a href="{{ url_for('sponsor_dashboard', username=sponsor.username) }}">Dashboard</a></li>
             <li><a href="{{ url_for('sponsor_campaign_dashboard', username=sponsor.username) }}">Campaigns</a></li>
-            <li><a href="#">Influencer Discovery</a></li>
+            <li><a href="{{ url_for('influencer_discovery', username=sponsor.username) }}">Influencer Discovery</a></li>
             <li><a href="{{ url_for('logout', username=sponsor.username) }}">Logout</a></li>
         </ul>
     </nav>

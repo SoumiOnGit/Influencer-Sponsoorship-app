@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influencer Discovery</title>
+</head>
+<body>
+    <h1>Influencer Discovery</h1>
+    <p>Discover influencers for your brand, {{ sponsor.name }}.</p>
+    
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('sponsor_dashboard', username=sponsor.username) }}">Dashboard</a></li>
+            <li><a href="{{ url_for('sponsor_campaign_dashboard', username=sponsor.username) }}">Campaigns</a></li>
+            <li><a href="{{ url_for('influencer_discovery', username=sponsor.username) }}">Influencer Discovery</a></li>
+            <li><a href="{{ url_for('logout', username=sponsor.username) }}">Logout</a></li>
+        </ul>
+    </nav>
+
+    <h2>All Influencers</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Followers</th>
+                <th>Niche</th>
+                <th>Reach</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for influencer in influencers %}
+            <tr>
+                <td>{{ influencer.username }}</td>
+                <td>{{ influencer.name }}</td>
+                <td>{{ influencer.email }}</td>
+                <td>{{ influencer.followers }}</td>
+                <td>{{ influencer.niche }}</td>
+                <td>{{ influencer.reach }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
