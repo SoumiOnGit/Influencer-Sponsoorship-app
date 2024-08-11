@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cardiff:wght@400;700&display=swap">
+
     <style>
         body {
             background-color: #f8f3f0; /* Off white */
@@ -27,14 +29,14 @@
             border: none;
         }
         .btn-primary:hover {
-            background-color: #a75151; /* Peach */
+            background-color: #feb9c2; /* Peach */
         }
         .btn-secondary {
             background-color: #f1a177; /* Light grey */
             border: none;
         }
         .btn-secondary:hover {
-            background-color: #a75151; /* Peach */
+            background-color: #feb9c2; /* Peach */
         }
         .logo {
             position: absolute;
@@ -48,9 +50,44 @@
         .btn-container {
             position: absolute;
             top: 20px;
-            right: -250px;
+            right: -300px;
             z-index: 1; /* Ensure buttons are on top */
         }
+        .marketing-container {
+            text-align: center;
+            margin-top: 150px; /* Adjust as needed */
+        }
+        .marketing-container h1 {
+            font-size: 4rem;
+            color: #300006;
+        }
+
+        .mark-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .mark-container h2 {
+            font-size: 3rem;
+            color: #300006;
+        }
+
+        .trusted-container {
+            text-align: center;
+            margin-top: 150px;
+            padding: 20px;
+            background-color: #f8f3f0; 
+            border: 2px solid #c1b9b9; /* Optional: Border for visual consistency */
+            border-radius: 8px; /* Optional: Rounded corners */
+            box-sizing: border-box; /* Ensure padding and border are included in the width */
+        }
+        
+        .trusted-container p {
+            font-size: 1.5rem; /* Adjust font size as needed */
+            color: #000; /* Black text */
+            margin: 0; /* Remove default margin */
+        }
+        
+
     </style>
 </head>
 <body>
@@ -62,8 +99,22 @@
                 <a class="btn btn-secondary btn-lg" href="{{ url_for('login') }}" role="button">Login</a>
             </div>
             <div class="jumbotron mt-5">
-                <!-- Optionally, you can add additional content here -->
+                
             </div>
+            
+            <div class="marketing-container">
+                <h1>Influencer Marketing</h1>
+            </div>
+
+            <div class="mark-container">
+                <h1>that can scale, that drives guaranteed results, which drives revenue. </h1>
+            </div>
+            
+            <div class="trusted-container">
+                <h2>Trusted by the online video industry for insights & measurement</h2>
+                <h4>550k+ Content creators</h4>
+            </div>
+
         </div>
     </div>
 </body>
