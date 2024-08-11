@@ -1,69 +1,17 @@
-# @app.route('/registerinfluencer', methods=['GET', 'POST'])
-# def register_influencer():
-#     if request.method == 'POST':
-#         username = request.form.get('username')
-#         name = request.form.get('name')
-#         password = request.form.get('password')
-#         email = request.form.get('email')
-#         followers = request.form.get('followers', type=int)
-#         niche = request.form.get('niche')
-#         reach = request.form.get('reach', type=int)
+<style>
+        body {
+            background-color: #E34234;
+        }
 
-#         if not (username and name and password and email and followers is not None and niche and reach is not None):
-#             flash("All fields are required.")
-#             return redirect(url_for('register_influencer'))
+        .btn-custom {
+            background-color: #D71334;
+            border-color: #D71334;
+            color: white;
+        }
 
-#         new_influencer = Influencer(
-#             username=username,
-#             name=name,
-#             password=password,
-#             email=email,
-#             followers=followers,
-#             niche=niche,
-#             reach=reach
-#         )
-
-#         try:
-#             db.session.add(new_influencer)
-#             db.session.commit()
-#             flash("Registration successful.")
-#         except Exception as e:
-#             db.session.rollback()
-#             flash(f"An error occurred: {e}")
-
-#         return redirect(url_for('index'))
-    
-#     return render_template('registerinfluencer.html')
-
-# @app.route('/registersponsor', methods=['GET', 'POST'])
-# def register_sponsor():
-#     if request.method == 'POST':
-#         username = request.form.get('username')
-#         name = request.form.get('name')
-#         password = request.form.get('password')
-#         email = request.form.get('email')
-#         companyname = request.form.get('companyname')
-
-#         if not (username and name and password and email and companyname):
-#             flash("All fields are required.")
-#             return redirect(url_for('register_sponsor'))
-
-#         new_sponsor = Sponsor(
-#             username=username,
-#             name=name,
-#             password=password,
-#             email=email,
-#             companyname=companyname
-#         )
-
-#         try:
-#             db.session.add(new_sponsor)
-#             db.session.commit()
-#             flash("Registration successful.")
-#         except Exception as e:
-#             db.session.rollback()
-#             flash(f"An error occurred: {e}")
-
-#         return redirect(url_for('index'))
-    
-#     return render_template('registersponsor.html')
+        .btn-custom:hover {
+            background-color: #800000;
+            border-color: none;
+            color: white;
+        }
+    </style>

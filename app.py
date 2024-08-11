@@ -74,8 +74,11 @@ def influencer_register():
             return redirect(url_for('index'))
         except Exception as e:
             db.session.rollback()
-            flash(f'Registration failed: {str(e)}', 'danger')
+            # flash(f'Registration failed: {str(e)}', 'danger')
     return render_template('influencer_register.html')
+
+
+
 
 @app.route('/sponsor/register', methods=['GET', 'POST'])
 def sponsor_register():
