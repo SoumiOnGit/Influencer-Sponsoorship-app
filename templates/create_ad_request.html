@@ -1,21 +1,103 @@
-<form method="POST">
-    <label for="influencer_username">Influencer Username:</label>
-    <select name="influencer_username" id="influencer_username" required>
-        {% for influencer in influencers %}
-            <option value="{{ influencer.username }}">{{ influencer.username }}</option>
-        {% endfor %}
-    </select>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Ad Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F1E1B3;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            color: #000;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Ad Request</h1>
 
-    <label for="messages">Messages:</label>
-    <textarea name="messages" id="messages" required></textarea>
+        <form method="POST">
+            <label for="influencer_username">Influencer Username:</label>
+            <select name="influencer_username" id="influencer_username" required>
+                {% for influencer in influencers %}
+                    <option value="{{ influencer.username }}">{{ influencer.username }}</option>
+                {% endfor %}
+            </select>
 
-    <label for="requirements">Requirements:</label>
-    <textarea name="requirements" id="requirements" required></textarea>
+            <label for="messages">Messages:</label>
+            <textarea name="messages" id="messages" required></textarea>
 
-    <label for="payment_amount">Payment Amount:</label>
-    <input type="number" name="payment_amount" id="payment_amount" step="0.01" required>
+            <label for="requirements">Requirements:</label>
+            <textarea name="requirements" id="requirements" required></textarea>
 
-    <button type="submit">Create Ad Request</button>
-</form>
+            <label for="payment_amount">Payment Amount:</label>
+            <input type="number" name="payment_amount" id="payment_amount" step="0.01" required>
 
-<a href="{{ url_for('view_campaign', username=sponsor.username, campaignid=campaign.id) }}">Back to Campaign</a>
+            <button type="submit">Create Ad Request</button>
+        </form>
+
+        <a class="back-link" href="{{ url_for('view_campaign', username=sponsor.username, campaignid=campaign.id) }}">Back to Campaign</a>
+    </div>
+</body>
+</html>

@@ -4,55 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Campaign</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F1E1B3;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        h1, h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="number"],
+        input[type="url"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        textarea {
+            height: 80px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        @media (max-width: 420px) {
+            .container {
+                width: 90%;
+                padding: 15px;
+            }
+            textarea {
+                height: 60px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Create a New Campaign</h1>
-    <form method="POST">
-        <label for="campaign_name">Campaign Name:</label>
-        <input type="text" id="campaign_name" name="campaign_name" required><br>
+    <div class="container">
+        <h1>Create a New Campaign</h1>
+        <form method="POST">
+            <label for="campaign_name">Campaign Name:</label>
+            <input type="text" id="campaign_name" name="campaign_name" required>
 
-        <label for="campaign_description">Campaign Description:</label>
-        <textarea id="campaign_description" name="campaign_description" required></textarea><br>
+            <label for="campaign_description">Campaign Description:</label>
+            <textarea id="campaign_description" name="campaign_description" required></textarea>
 
-        <label for="start_date">Start Date:</label>
-        <input type="date" id="start_date" name="start_date" required><br>
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required>
 
-        <label for="end_date">End Date:</label>
-        <input type="date" id="end_date" name="end_date" required><br>
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" required>
 
-        <label for="budget">Budget:</label>
-        <input type="number" id="budget" name="budget" required><br>
+            <label for="budget">Budget:</label>
+            <input type="number" id="budget" name="budget" required>
 
-        <label for="visibility">Visibility:</label>
-        <select id="visibility" name="visibility">
-            <option value="public">Public</option>
-            <option value="private">Private</option>
-        </select><br>
+            <label for="visibility">Visibility:</label>
+            <select id="visibility" name="visibility">
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+            </select>
 
-        <label for="goals">Goals:</label>
-        <textarea id="goals" name="goals" required></textarea><br>
+            <label for="goals">Goals:</label>
+            <textarea id="goals" name="goals" required></textarea>
 
-        <h3>Ad Requests</h3>
+            <label for="product_link">Product Link:</label>
+            <input type="url" id="product_link" name="product_link">
 
-        <label for="product_link">Product Link:</label>
-        <input type="url" id="product_link" name="product_link"><br>
+            <label for="requirements">Ad Requirements:</label>
+            <textarea id="requirements" name="requirements"></textarea>
 
-        <label for="requirements">Ad Requirements:</label>
-        <textarea id="requirements" name="requirements"></textarea><br>
+            <label for="target_gender">Target Gender:</label>
+            <input type="text" id="target_gender" name="target_gender">
 
-        <label for="target_gender">Target Gender:</label>
-        <input type="text" id="target_gender" name="target_gender"><br>
+            <label for="target_age">Target Age:</label>
+            <input type="text" id="target_age" name="target_age">
 
-        <label for="target_age">Target Age:</label>
-        <input type="text" id="target_age" name="target_age"><br>
+            <label for="target_location">Target Location:</label>
+            <input type="text" id="target_location" name="target_location">
 
-        <label for="target_location">Target Location:</label>
-        <input type="text" id="target_location" name="target_location"><br>
+            <label for="live_date">Live Date:</label>
+            <input type="date" id="live_date" name="live_date">
 
-        <label for="live_date">Live Date:</label>
-        <input type="date" id="live_date" name="live_date"><br>
-
-        <button type="submit">Create Campaign</button>
-    </form>
+            <button type="submit">Create Campaign</button>
+        </form>
+    </div>
 </body>
 </html>

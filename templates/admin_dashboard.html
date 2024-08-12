@@ -94,6 +94,23 @@
             font-weight: bold;
             color: #333;
         }
+        .flagged-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+        }
+        .flagged-box {
+            width: 30%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .flagged-box h2 {
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -117,103 +134,112 @@
 
     <div class="summary-container">
         <div class="summary-box">
-            <h2>Total Users</h2>
+            <h1>Total Users</h1>
             <p>Influencers: {{ total_influencers }}</p>
             <p>Sponsors: {{ total_sponsors }}</p>
         </div>
         <div class="summary-box">
-            <h2>Total Campaigns</h2>
+            <h1>Total Campaigns</h1>
             <p>{{ total_campaigns }}</p>
         </div>
         <div class="summary-box">
-            <h2>Total Ad Requests</h2>
+            <h1>Total Ad Requests</h1>
             <p>{{ total_ad_requests }}</p>
         </div>
     </div>
 
-    <h2>Flagged Influencers</h2>
-    {% if flagged_influencers %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Followers</th>
-                    <th>Niche</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for influencer in flagged_influencers %}
-                <tr>
-                    <td>{{ influencer.username }}</td>
-                    <td>{{ influencer.name }}</td>
-                    <td>{{ influencer.email }}</td>
-                    <td>{{ influencer.followers }}</td>
-                    <td>{{ influencer.niche }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p class="no-data">No flagged influencers found.</p>
-    {% endif %}
+    <div class="flagged-container">
+        <div class="flagged-box">
+            <h2>Flagged Influencers</h2>
+            {% if flagged_influencers %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Followers</th>
+                            <th>Niche</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for influencer in flagged_influencers %}
+                        <tr>
+                            <td>{{ influencer.username }}</td>
+                            <td>{{ influencer.name }}</td>
+                            <td>{{ influencer.email }}</td>
+                            <td>{{ influencer.followers }}</td>
+                            <td>{{ influencer.niche }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="no-data">No flagged influencers found.</p>
+            {% endif %}
+        </div>
 
-    <h2>Flagged Sponsors</h2>
-    {% if flagged_sponsors %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Company Name</th>
-                    <th>Industry</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for sponsor in flagged_sponsors %}
-                <tr>
-                    <td>{{ sponsor.username }}</td>
-                    <td>{{ sponsor.name }}</td>
-                    <td>{{ sponsor.email }}</td>
-                    <td>{{ sponsor.companyname }}</td>
-                    <td>{{ sponsor.industry }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p class="no-data">No flagged sponsors found.</p>
-    {% endif %}
+        <div class="flagged-box">
+            <h2>Flagged Sponsors</h2>
+            {% if flagged_sponsors %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Company Name</th>
+                            <th>Industry</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sponsor in flagged_sponsors %}
+                        <tr>
+                            <td>{{ sponsor.username }}</td>
+                            <td>{{ sponsor.name }}</td>
+                            <td>{{ sponsor.email }}</td>
+                            <td>{{ sponsor.companyname }}</td>
+                            <td>{{ sponsor.industry }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="no-data">No flagged sponsors found.</p>
+            {% endif %}
+        </div>
 
-    <h2>Flagged Campaigns</h2>
-    {% if flagged_campaigns %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Campaign Name</th>
-                    <th>Description</th>
-                    <th>Sponsor</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for campaign in flagged_campaigns %}
-                <tr>
-                    <td>{{ campaign.name }}</td>
-                    <td>{{ campaign.description }}</td>
-                    <td>{{ campaign.sponsor.name }}</td>
-                    <td>{{ campaign.start_date }}</td>
-                    <td>{{ campaign.end_date }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p class="no-data">No flagged campaigns found.</p>
-    {% endif %}
+        <div class="flagged-box">
+            <h2>Flagged Campaigns</h2>
+            {% if flagged_campaigns %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Campaign Name</th>
+                            <th>Description</th>
+                            <th>Sponsor</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for campaign in flagged_campaigns %}
+                        <tr>
+                            <td>{{ campaign.name }}</td>
+                            <td>{{ campaign.description }}</td>
+                            <td>{{ campaign.sponsor.name }}</td>
+                            <td>{{ campaign.start_date }}</td>
+                            <td>{{ campaign.end_date }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="no-data">No flagged campaigns found.</p>
+            {% endif %}
+        </div>
+    </div>
+    <a href="{{ url_for('index') }}" class="logout-button">Logout</a>
 
     <script>
         var activeUsersData = {

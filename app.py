@@ -137,11 +137,16 @@ def login():
     
     return render_template('login.html')
 
+
+
+
 @app.route('/influencer/<username>/dashboard')
 def influencer_dashboard(username):
     influencer = Influencer.query.filter_by(username=username).first_or_404()
     accepted_ad_requests = AdRequest.query.filter_by(influencer_id=influencer.id, status='Accepted').all()
     return render_template('influencer_dashboard.html', influencer=influencer, accepted_ad_requests=accepted_ad_requests)
+
+
 
 
 @app.route('/influencer/<username>/edit_profile', methods=['GET', 'POST'])
@@ -164,6 +169,8 @@ def edit_influencer_profile(username):
     return render_template('edit_influencer_profile.html', influencer=influencer)
 
 
+
+
 @app.route('/sponsor/<username>/influencer_discovery')
 def influencer_discovery(username):
     sponsor = Sponsor.query.filter_by(username=username).first_or_404()
@@ -178,11 +185,15 @@ def view_influencer_profile(influencer_id):
     return render_template('influencer_profile.html', influencer=influencer)
 
 
+
+
 @app.route('/sponsor/<username>/dashboard')
 def sponsor_dashboard(username):
     sponsor = Sponsor.query.filter_by(username=username).first_or_404()
     campaigns = Campaign.query.filter_by(sponsor_id=sponsor.id).all()
     return render_template('sponsor_dashboard.html', sponsor=sponsor, campaigns=campaigns)
+
+
 
 
 @app.route('/sponsor/<username>/dashboard/campaign')
@@ -198,7 +209,6 @@ def sponsor_campaign_dashboard(username):
 def create_campaign(username):
     sponsor = Sponsor.query.filter_by(username=username).first_or_404()
     if request.method == 'POST':
-        # Extract form data
         campaign_name = request.form.get('campaign_name')
         campaign_description = request.form.get('campaign_description')
         start_date = request.form.get('start_date')
@@ -213,7 +223,6 @@ def create_campaign(username):
         target_location = request.form.get('target_location')
         live_date = request.form.get('live_date')
 
-        # Create new campaign instance
         new_campaign = Campaign(
             name=campaign_name,
             description=campaign_description,
@@ -240,11 +249,15 @@ def create_campaign(username):
 
 
 
+
+
 @app.route('/sponsor/<username>/campaign/<campaignid>')
 def view_campaign(username, campaignid):
     sponsor = Sponsor.query.filter_by(username=username).first_or_404()
     campaign = Campaign.query.get_or_404(campaignid)
     return render_template('view_campaign.html', campaign=campaign, sponsor=sponsor)
+
+
 
 
 
@@ -270,7 +283,6 @@ def create_ad_request(username, campaignid):
         db.session.add(new_ad_request)
         db.session.commit()
 
-        # Redirect to the campaign page
         return redirect(url_for('view_campaign', username=username, campaignid=campaignid))
     
     return render_template('create_ad_request.html', campaign=campaign, sponsor=sponsor, influencers=influencers)
@@ -290,12 +302,15 @@ def view_ad_request(username, campaignid, ad_request_id):
         abort(404)
 
 
+
+
 @app.route('/influencer/<username>/campaigns')
 def influencer_campaigns(username):
     influencer = Influencer.query.filter_by(username=username).first_or_404()
     ad_requests = AdRequest.query.filter_by(influencer_id=influencer.id).all()
     
     return render_template('influencer_campaigns.html', influencer=influencer, ad_requests=ad_requests)
+
 
 
 
@@ -311,6 +326,8 @@ def update_ad_request_status(ad_request_id):
     return redirect(url_for('influencer_campaigns', username=ad_request.influencer.username))
 
 
+
+
 @app.route('/admin/dashboard')
 def admin_dashboard():
     if 'user' not in session or session['user'] != 'admin':
@@ -322,20 +339,20 @@ def admin_dashboard():
     total_campaigns = Campaign.query.count()
     total_ad_requests = AdRequest.query.count()
     
-    # Flagged data
+    
     flagged_influencers = Influencer.query.filter_by(flagged=True).all()
     flagged_sponsors = Sponsor.query.filter_by(flagged=True).all()
     flagged_campaigns = Campaign.query.filter_by(flagged=True).all()
     
-    # Active Users - Influencers who accepted ad requests
+    
     accepted_influencers = db.session.query(AdRequest.influencer_id).distinct().count()
     no_ad_requests_influencers = total_influencers - accepted_influencers
     
-    # Active Campaigns - Public vs Private
+    
     public_campaigns = Campaign.query.filter_by(visibility='public').count()
     private_campaigns = Campaign.query.filter_by(visibility='private').count()
 
-    # Fetch all influencers and sponsors
+    
     all_influencers = Influencer.query.all()
     all_sponsors = Sponsor.query.all()
 
@@ -357,13 +374,15 @@ def admin_dashboard():
     )
 
 
+
+
 @app.route('/sponsor/<username>/campaign/<campaignid>/update', methods=['GET', 'POST'])
 def update_campaign(username, campaignid):
     sponsor = Sponsor.query.filter_by(username=username).first_or_404()
     campaign = Campaign.query.get_or_404(campaignid)
     
     if request.method == 'POST':
-        # Update campaign details
+    
         campaign.name = request.form.get('campaign_name')
         campaign.description = request.form.get('campaign_description')
         campaign.start_date = datetime.strptime(request.form.get('start_date'), '%Y-%m-%d').date()
@@ -386,6 +405,8 @@ def update_campaign(username, campaignid):
 
 
 
+
+
 @app.route('/sponsor/<username>/campaign/<campaignid>/delete', methods=['POST'])
 def delete_campaign(username, campaignid):
     sponsor = Sponsor.query.filter_by(username=username).first_or_404()
@@ -398,6 +419,9 @@ def delete_campaign(username, campaignid):
     return redirect(url_for('sponsor_campaign_dashboard', username=username))
 
 
+
+
+
 @app.route('/sponsor/<username>/campaign/<campaignid>/ad_request/<ad_request_id>/edit', methods=['GET', 'POST'])
 def edit_ad_request(username, campaignid, ad_request_id):
     sponsor = Sponsor.query.filter_by(username=username).first_or_404()
@@ -405,7 +429,7 @@ def edit_ad_request(username, campaignid, ad_request_id):
     ad_request = AdRequest.query.get_or_404(ad_request_id)
 
     if ad_request.campaign_id != campaign.id or campaign.sponsor_id != sponsor.id:
-        abort(403)  # Prevent unauthorized access
+        abort(403)  
 
     if request.method == 'POST':
         ad_request.influencer_id = request.form.get('influencer_id')
@@ -430,12 +454,14 @@ def delete_ad_request(username, campaignid, ad_request_id):
     ad_request = AdRequest.query.get_or_404(ad_request_id)
 
     if ad_request.campaign_id != campaign.id or campaign.sponsor_id != sponsor.id:
-        abort(403)  # Prevent unauthorized access
+        abort(403) 
 
     db.session.delete(ad_request)
     db.session.commit()
     flash('Ad request deleted successfully!', 'success')
     return redirect(url_for('view_campaign', username=username, campaignid=campaignid))
+
+
 
 
 
@@ -447,6 +473,10 @@ def browse_influencers():
     influencers = Influencer.query.all()
     return render_template('browse_influencers.html', influencers=influencers)
 
+
+
+
+
 @app.route('/admin/browse/sponsors')
 def browse_sponsors():
     if 'user' not in session or session['user'] != 'admin':
@@ -454,6 +484,9 @@ def browse_sponsors():
     
     sponsors = Sponsor.query.all()
     return render_template('browse_sponsors.html', sponsors=sponsors)
+
+
+
 
 @app.route('/admin/browse/campaigns')
 def browse_campaigns():
@@ -465,6 +498,7 @@ def browse_campaigns():
 
 
 
+
 @app.route('/flag/influencer/<int:influencer_id>', methods=['POST'])
 def flag_influencer(influencer_id):
     influencer = Influencer.query.get(influencer_id)
@@ -472,6 +506,9 @@ def flag_influencer(influencer_id):
         influencer.flagged = True
         db.session.commit()
     return redirect(url_for('browse_influencers'))
+
+
+
 
 @app.route('/unflag/influencer/<int:influencer_id>', methods=['POST'])
 def unflag_influencer(influencer_id):
@@ -481,6 +518,9 @@ def unflag_influencer(influencer_id):
         db.session.commit()
     return redirect(url_for('browse_influencers'))
 
+
+
+
 @app.route('/flag/sponsor/<int:sponsor_id>', methods=['POST'])
 def flag_sponsor(sponsor_id):
     sponsor = Sponsor.query.get(sponsor_id)
@@ -488,6 +528,9 @@ def flag_sponsor(sponsor_id):
         sponsor.flagged = True
         db.session.commit()
     return redirect(url_for('browse_sponsors'))
+
+
+
 
 @app.route('/unflag/sponsor/<int:sponsor_id>', methods=['POST'])
 def unflag_sponsor(sponsor_id):
@@ -497,6 +540,9 @@ def unflag_sponsor(sponsor_id):
         db.session.commit()
     return redirect(url_for('browse_sponsors'))
 
+
+
+
 @app.route('/flag/campaign/<int:campaign_id>', methods=['POST'])
 def flag_campaign(campaign_id):
     campaign = Campaign.query.get(campaign_id)
@@ -504,6 +550,10 @@ def flag_campaign(campaign_id):
         campaign.flagged = True
         db.session.commit()
     return redirect(url_for('browse_campaigns'))
+
+
+
+
 
 @app.route('/unflag/campaign/<int:campaign_id>', methods=['POST'])
 def unflag_campaign(campaign_id):
@@ -518,10 +568,9 @@ def unflag_campaign(campaign_id):
 
 @app.route('/logout')
 def logout():
-    session.pop('user', None)  # Clear the session
+    session.pop('user', None)  
     flash('You have been logged out.', 'success')
     return redirect(url_for('login')) 
-
 
 
 

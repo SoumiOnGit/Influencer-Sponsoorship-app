@@ -3,229 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Sponsor Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            background-color: #F1E1B3; /* Body background color */
         }
-        h1, h2 {
-            color: #333;
+        .sidebar {
+            min-width: 200px;
+            max-width: 200px;
+            height: 100vh;
+            position: fixed;
+            background-color: #f8f9fa; /* Sidebar background color */
+            padding-top: 20px;
         }
-        .stats-container {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 40px;
+
+        .content {
+            margin-left: 350px;
+            background-color: #F1E1B3; /* Match the body background color */
+            display: grid;
+            place-items: center; /* Center content horizontally and vertically */
+            height: 20vh; /* Full height to center vertically */
         }
-        .chart-container {
-            width: 30%; 
-            height: 250px; 
+
+        .headline {
+            font-size: 2.5rem; /* Larger font size */
+            font-weight: bold; /* Bold text */
+            color: #3D0008; /* Dark color to match nav text */
+            text-transform: uppercase; /* Uppercase text */
         }
-        canvas {
-            max-width: 100%;
-            max-height: 100%;
+
+        .sidebar .nav-link {
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            color: #3D0008; /* Nav text color */
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        .no-data {
-            color: #999;
-            text-align: center;
-        }
-        .container {
-            margin-top: 20px;
-        }
-        .list-group {
-            margin-bottom: 20px;
-        }
-        .list-group-item {
-            cursor: pointer;
+
+        .sidebar .nav-link:hover {
+            background-color: #e9ecef; /* Hover effect for nav links */
         }
     </style>
 </head>
-<body>
-
-    <h1>Admin Dashboard</h1>
-
-    <div class="stats-container">
-        <div class="chart-container">
-            <canvas id="activeUsersChart"></canvas>
-        </div>
-        <div class="chart-container">
-            <canvas id="activeCampaignsChart"></canvas>
-        </div>
+<body class="d-flex">
+    <div class="sidebar d-flex flex-column">
+        <h4 class="text-center">Welcome, {{ sponsor.name }}!</h4>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('sponsor_dashboard', username=sponsor.username) }}">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('sponsor_campaign_dashboard', username=sponsor.username) }}">Campaigns</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('influencer_discovery', username=sponsor.username) }}">Influencer Discovery</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout', username=sponsor.username) }}">Logout</a>
+            </li>
+        </ul>
     </div>
 
-    <h2>Total Users</h2>
-    <p>Influencers: {{ total_influencers }}</p>
-    <p>Sponsors: {{ total_sponsors }}</p>
-
-    <h2>Total Campaigns</h2>
-    <p>{{ total_campaigns }}</p>
-
-    <h2>Total Ad Requests</h2>
-    <p>{{ total_ad_requests }}</p>
-
-    <h2>Flagged Influencers</h2>
-    {% if flagged_influencers %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Followers</th>
-                    <th>Niche</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for influencer in flagged_influencers %}
-                <tr>
-                    <td>{{ influencer.username }}</td>
-                    <td>{{ influencer.name }}</td>
-                    <td>{{ influencer.email }}</td>
-                    <td>{{ influencer.followers }}</td>
-                    <td>{{ influencer.niche }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p class="no-data">No flagged influencers found.</p>
-    {% endif %}
-
-    <h2>Flagged Sponsors</h2>
-    {% if flagged_sponsors %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Company Name</th>
-                    <th>Industry</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for sponsor in flagged_sponsors %}
-                <tr>
-                    <td>{{ sponsor.username }}</td>
-                    <td>{{ sponsor.name }}</td>
-                    <td>{{ sponsor.email }}</td>
-                    <td>{{ sponsor.companyname }}</td>
-                    <td>{{ sponsor.industry }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p class="no-data">No flagged sponsors found.</p>
-    {% endif %}
-
-    <h2>Flagged Campaigns</h2>
-    {% if flagged_campaigns %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Campaign Name</th>
-                    <th>Description</th>
-                    <th>Sponsor</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for campaign in flagged_campaigns %}
-                <tr>
-                    <td>{{ campaign.name }}</td>
-                    <td>{{ campaign.description }}</td>
-                    <td>{{ campaign.sponsor.name }}</td>
-                    <td>{{ campaign.start_date }}</td>
-                    <td>{{ campaign.end_date }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p class="no-data">No flagged campaigns found.</p>
-    {% endif %}
-
-    <div class="container mt-4">
-        <h2>Navigation</h2>
-        <div class="list-group">
-            <a href="{{ url_for('browse_influencers') }}" class="list-group-item list-group-item-action">Browse All Influencers</a>
-            <a href="{{ url_for('browse_sponsors') }}" class="list-group-item list-group-item-action">Browse All Sponsors</a>
-            <a href="{{ url_for('browse_campaigns') }}" class="list-group-item list-group-item-action">Browse All Campaigns</a>
-        </div>
+    <div class="content container">
+        <h1>Unlock Influencers for Your Brand</h1>
+        <!-- Add more content here as needed -->
     </div>
-
-    <script>
-        
-        var activeUsersData = {
-            labels: ['Accepted Ad Requests', 'No Ad Requests'],
-            datasets: [{
-                label: 'Active Users',
-                data: [{{ accepted_influencers }}, {{ no_ad_requests_influencers }}],
-                backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
-                borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
-                borderWidth: 1
-            }]
-        };
-
-        
-        var activeCampaignsData = {
-            labels: ['Public Campaigns', 'Private Campaigns'],
-            datasets: [{
-                label: 'Active Campaigns',
-                data: [{{ public_campaigns }}, {{ private_campaigns }}],
-                backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)'],
-                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
-                borderWidth: 1
-            }]
-        };
-
-
-        var ctx1 = document.getElementById('activeUsersChart').getContext('2d');
-        var activeUsersChart = new Chart(ctx1, {
-            type: 'pie',
-            data: activeUsersData,
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    }
-                }
-            }
-        });
-
-        
-        var ctx2 = document.getElementById('activeCampaignsChart').getContext('2d');
-        var activeCampaignsChart = new Chart(ctx2, {
-            type: 'pie',
-            data: activeCampaignsData,
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    }
-                }
-            }
-        });
-    </script>
 </body>
 </html>

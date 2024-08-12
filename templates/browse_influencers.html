@@ -5,33 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Browse Influencers</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #F1E1B3;
+        }
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            margin-bottom: 1rem;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .card-title {
+            margin-bottom: 1rem;
+        }
+        .btn {
+            margin-top: 0.5rem;
+        }
+        .btn-warning {
+            margin-right: 0.5rem;
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-4">
-        <h1>All Influencers</h1>
-        <ul class="list-group">
+        <h1 class="mb-4 text-center">All Influencers</h1>
+        <div class="row">
             {% for influencer in influencers %}
-                <li class="list-group-item">
-                    <strong>{{ influencer.name }}</strong> - {{ influencer.username }}
-                    <br>Email: {{ influencer.email }}
-                    <br>Followers: {{ influencer.followers }}
-                    <br>Niche: {{ influencer.niche }}
-                    <br>Reach: {{ influencer.reach }}
-                    <br>
-                    {% if not influencer.flagged %}
-                        <form action="{{ url_for('flag_influencer', influencer_id=influencer.id) }}" method="post">
-                            <button type="submit" class="btn btn-warning">Flag</button>
-                        </form>
-                    {% else %}
-                        <form action="{{ url_for('unflag_influencer', influencer_id=influencer.id) }}" method="post">
-                            <button type="submit" class="btn btn-success">Unflag</button>
-                        </form>
-                    {% endif %}
-                </li>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ influencer.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ influencer.username }}</h6>
+                            <p class="card-text">Email: {{ influencer.email }}</p>
+                            <p class="card-text">Followers: {{ influencer.followers }}</p>
+                            <p class="card-text">Niche: {{ influencer.niche }}</p>
+                            <p class="card-text">Reach: {{ influencer.reach }}</p>
+                            <div class="mt-2">
+                                {% if not influencer.flagged %}
+                                    <form action="{{ url_for('flag_influencer', influencer_id=influencer.id) }}" method="post">
+                                        <button type="submit" class="btn btn-warning">Flag</button>
+                                    </form>
+                                {% else %}
+                                    <form action="{{ url_for('unflag_influencer', influencer_id=influencer.id) }}" method="post">
+                                        <button type="submit" class="btn btn-success">Unflag</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% else %}
-                <li class="list-group-item">No influencers found.</li>
+                <div class="col-12">
+                    <div class="alert alert-info">No influencers found.</div>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     </div>
 </body>
 </html>

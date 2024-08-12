@@ -5,34 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Browse Campaigns</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #F1E1B3;
+        }
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            margin-bottom: 1rem;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .card-title {
+            margin-bottom: 1rem;
+        }
+        .btn {
+            margin-top: 0.5rem;
+        }
+        .btn-warning {
+            margin-right: 0.5rem;
+        }
+        .list-group-item {
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            padding: 1.5rem;
+            background-color: #f8f3f0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .list-group-item strong {
+            font-size: 1.2rem;
+        }
+        .list-group-item br {
+            margin-bottom: 0.5rem;
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-4">
-        <h1>All Campaigns</h1>
-        <ul class="list-group">
+        <h1 class="mb-4 text-center">All Campaigns</h1>
+        <div class="row">
             {% for campaign in campaigns %}
-                <li class="list-group-item">
-                    <strong>{{ campaign.name }}</strong> - {{ campaign.sponsor.name }}
-                    <br>Description: {{ campaign.description }}
-                    <br>Start Date: {{ campaign.start_date }}
-                    <br>End Date: {{ campaign.end_date }}
-                    <br>Budget: {{ campaign.budget }}
-                    <br>Visibility: {{ campaign.visibility }}
-                    <br>
-                    {% if not campaign.flagged %}
-                        <form action="{{ url_for('flag_campaign', campaign_id=campaign.id) }}" method="post">
-                            <button type="submit" class="btn btn-warning">Flag</button>
-                        </form>
-                    {% else %}
-                        <form action="{{ url_for('unflag_campaign', campaign_id=campaign.id) }}" method="post">
-                            <button type="submit" class="btn btn-success">Unflag</button>
-                        </form>
-                    {% endif %}
-                </li>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ campaign.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Sponsored by: {{ campaign.sponsor.name }}</h6>
+                            <p class="card-text">Description: {{ campaign.description }}</p>
+                            <p class="card-text">Start Date: {{ campaign.start_date }}</p>
+                            <p class="card-text">End Date: {{ campaign.end_date }}</p>
+                            <p class="card-text">Budget: {{ campaign.budget }}</p>
+                            <p class="card-text">Visibility: {{ campaign.visibility }}</p>
+                            <div class="mt-2">
+                                {% if not campaign.flagged %}
+                                    <form action="{{ url_for('flag_campaign', campaign_id=campaign.id) }}" method="post">
+                                        <button type="submit" class="btn btn-warning">Flag</button>
+                                    </form>
+                                {% else %}
+                                    <form action="{{ url_for('unflag_campaign', campaign_id=campaign.id) }}" method="post">
+                                        <button type="submit" class="btn btn-success">Unflag</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% else %}
-                <li class="list-group-item">No campaigns found.</li>
+                <div class="col-12">
+                    <div class="alert alert-info">No campaigns found.</div>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     </div>
 </body>
 </html>

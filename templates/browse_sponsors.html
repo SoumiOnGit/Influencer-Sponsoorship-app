@@ -5,33 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Browse Sponsors</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #F1E1B3;
+        }
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            margin-bottom: 1rem;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .card-title {
+            margin-bottom: 1rem;
+        }
+        .btn {
+            margin-top: 0.5rem;
+        }
+        .btn-warning {
+            margin-right: 0.5rem;
+        }
+        .list-group-item {
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #f8f3f0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-4">
-        <h1>All Sponsors</h1>
-        <ul class="list-group">
+        <h1 class="mb-4 text-center">All Sponsors</h1>
+        <div class="row">
             {% for sponsor in sponsors %}
-                <li class="list-group-item">
-                    <strong>{{ sponsor.name }}</strong> - {{ sponsor.username }}
-                    <br>Email: {{ sponsor.email }}
-                    <br>Company Name: {{ sponsor.companyname }}
-                    <br>Industry: {{ sponsor.industry }}
-                    <br>Budget: {{ sponsor.budget }}
-                    <br>
-                    {% if not sponsor.flagged %}
-                        <form action="{{ url_for('flag_sponsor', sponsor_id=sponsor.id) }}" method="post">
-                            <button type="submit" class="btn btn-warning">Flag</button>
-                        </form>
-                    {% else %}
-                        <form action="{{ url_for('unflag_sponsor', sponsor_id=sponsor.id) }}" method="post">
-                            <button type="submit" class="btn btn-success">Unflag</button>
-                        </form>
-                    {% endif %}
-                </li>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ sponsor.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ sponsor.username }}</h6>
+                            <p class="card-text">Email: {{ sponsor.email }}</p>
+                            <p class="card-text">Company Name: {{ sponsor.companyname }}</p>
+                            <p class="card-text">Industry: {{ sponsor.industry }}</p>
+                            <p class="card-text">Budget: {{ sponsor.budget }}</p>
+                            <div class="mt-2">
+                                {% if not sponsor.flagged %}
+                                    <form action="{{ url_for('flag_sponsor', sponsor_id=sponsor.id) }}" method="post">
+                                        <button type="submit" class="btn btn-warning">Flag</button>
+                                    </form>
+                                {% else %}
+                                    <form action="{{ url_for('unflag_sponsor', sponsor_id=sponsor.id) }}" method="post">
+                                        <button type="submit" class="btn btn-success">Unflag</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% else %}
-                <li class="list-group-item">No sponsors found.</li>
+                <div class="col-12">
+                    <div class="alert alert-info">No sponsors found.</div>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     </div>
 </body>
 </html>

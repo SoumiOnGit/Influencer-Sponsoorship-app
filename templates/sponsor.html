@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sponsor Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #F1E1B3;
+        }
+        .btn-custom {
+            background-color: #D71334;
+            color: #fff;
+        }
+        .btn-custom:hover {
+            background-color: #800000;
+            color: #fff;
+        }
+        .jumbotron {
+            background-color: #f8f3f0;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -12,7 +28,7 @@
             <h1 class="display-4">Unlock Influence for Your Brand</h1>
             <p class="lead">Identify Social Trends</p>
             <p class="lead">Use Data-Driven Approach to Create Your Next Campaign Strategy</p>
-            <a class="btn btn-primary btn-lg" href="{{ url_for('sponsor_register') }}" role="button">Register</a>
+            <a class="btn btn-custom btn-lg" href="{{ url_for('sponsor_register') }}" role="button">Register</a>
         </div>
     </div>
 </body>

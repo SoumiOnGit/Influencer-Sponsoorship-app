@@ -4,9 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campaigns Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F1E1B3;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+            margin: 0 0 20px 0; /* Adjust margin to move heading closer to the top */
+            text-align: left; /* Align text to the left */
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        li {
+            background-color: #FFF8DC;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .create-campaign-link {
+            display: inline-block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 200px;
+        }
+        .create-campaign-link:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome, {{ sponsor.name }}</h1>
     <h2>Your Campaigns</h2>
 
     <ul>
@@ -19,6 +67,6 @@
         {% endfor %}
     </ul>
 
-    <a href="{{ url_for('create_campaign', username=sponsor.username) }}">Create New Campaign</a>
+    <a href="{{ url_for('create_campaign', username=sponsor.username) }}" class="create-campaign-link">Create New Campaign</a>
 </body>
 </html>
