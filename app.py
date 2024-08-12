@@ -111,6 +111,8 @@ def sponsor_register():
 
     return render_template('sponsor_register.html')
 
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
