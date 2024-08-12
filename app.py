@@ -74,7 +74,6 @@ def influencer_register():
             return redirect(url_for('index'))
         except Exception as e:
             db.session.rollback()
-            # flash(f'Registration failed: {str(e)}', 'danger')
     return render_template('influencer_register.html')
 
 
@@ -165,7 +164,7 @@ def edit_influencer_profile(username):
         influencer.reach = int(request.form.get('reach'))
 
         db.session.commit()
-        flash('Profile updated successfully!', 'success')
+        
         return redirect(url_for('influencer_dashboard', username=username))
 
     return render_template('edit_influencer_profile.html', influencer=influencer)
